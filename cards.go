@@ -23,7 +23,7 @@ func NewDeck() Deck {
 	nCards := len(Suits) * Ranks
 	d := make([]Card, nCards)
 	for i := 0; i < nCards; i++ {
-		d[i] = Card(i)
+		d[i] = Card{i}
 	}
 	return d
 }
@@ -81,17 +81,21 @@ func (d Deck) Empty() bool {
 }
 
 // Card represents a Card in a Deck
-type Card int
+type Card struct {
+	int
+}
 
 // Suit returns the suit of the card
 func (c Card) Suit() Suit {
-	return Suit(int(c) / Ranks)
+	return Suit{c.int / Ranks}
 }
 
 // Rank returns the value of the card, for comparison with the rank of other cards.
 func (c Card) Rank() int {
-	return int(c) % Ranks
+	return c.int % Ranks
 }
+
+var faces = []string{"Jack", "Queen", "King", "Ace"}
 
 // String returns a string representation of the card, e.g., "4 of Hearts", "Ace of Spades"
 //
@@ -107,26 +111,17 @@ func (c Card) String() string {
 	if v < 9 {
 		s = fmt.Sprintf("%d", v+2)
 	} else {
-		switch v {
-		case 9:
-			s = "Jack"
-		case 10:
-			s = "Queen"
-		case 11:
-			s = "King"
-		case 12:
-			s = "Ace"
-		default:
-			panic("bad value")
-		}
+		s = faces[v-9]
 	}
 	return fmt.Sprintf("%s of %s", s, c.Suit())
 }
 
 // Suit represents the Suit of the card, one of Suits
-type Suit int
+type Suit struct {
+	int
+}
 
 // String returns the string representation of the card, e.g., "Hearts"
 func (s Suit) String() string {
-	return Suits[s]
+	return Suits[s.int]
 }
