@@ -52,3 +52,13 @@ func TestEmpty(t *testing.T) {
 		t.Errorf("expected nil deck")
 	}
 }
+
+func TestRiffle(t *testing.T) {
+	d1 := Deck([]Card{0, 1, 2})
+	d2 := Deck([]Card{3, 4, 5})
+	d := Riffle(d1, d2)
+	exp := Deck([]Card{0, 3, 1, 4, 2, 5})
+	if !reflect.DeepEqual(d, exp) {
+		t.Errorf("unexpected riffle\n got %s\nwant %s", d, exp)
+	}
+}

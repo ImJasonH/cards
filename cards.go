@@ -47,6 +47,17 @@ func (d Deck) Cut() (Deck, Deck) {
 	return d[h:], d[:h]
 }
 
+// Combines two decks using a strictly mechanical riffle, alternating a card from each deck
+func Riffle(d1, d2 Deck) Deck {
+	var d Deck
+	for !d1.Empty() && !d2.Empty() {
+		d.Add(*d1.Top(), *d2.Top())
+	}
+	d.Add(d1...)
+	d.Add(d2...)
+	return d
+}
+
 // Top deals the top card from the deck, removing it from the deck
 func (dp *Deck) Top() *Card {
 	d := *dp
