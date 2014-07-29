@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-// The possible suits to use. By default this is "Spades", "Hearts", "Diamonds", "Clubs"
-var Suits = []string{"Spades", "Hearts", "Diamonds", "Clubs"}
+// The possible suits to use. By default this is {'♠', '♡', '♢', '♣'}
+var Suits = []rune{'♠', '♡', '♢', '♣'}
 
 // The number of ranks (values) per suit. By default this is 13
 var Ranks = 13
@@ -108,7 +108,7 @@ func (c Card) Rank() int {
 	return int(c) % Ranks
 }
 
-var faces = []string{"Jack", "Queen", "King", "Ace"}
+var faces = []string{"J", "Q", "K", "A"}
 
 // String returns a string representation of the card, e.g., "4 of Hearts", "Ace of Spades"
 //
@@ -126,7 +126,7 @@ func (c Card) String() string {
 	} else {
 		s = faces[v-9]
 	}
-	return fmt.Sprintf("%s of %s", s, c.Suit())
+	return fmt.Sprintf("%s%s", s, c.Suit())
 }
 
 // Suit represents the Suit of the card, one of Suits
@@ -134,5 +134,5 @@ type Suit int
 
 // String returns the string representation of the card, e.g., "Hearts"
 func (s Suit) String() string {
-	return Suits[s]
+	return string(Suits[s])
 }
