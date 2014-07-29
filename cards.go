@@ -1,4 +1,6 @@
 // Package cards provides methods for common operations on a deck of cards
+//
+// See https://godoc.org/gist.github.com/9d9bd6b64f06a0066fb2.git
 package cards
 
 import (
@@ -46,8 +48,11 @@ func (d Deck) Cut() (Deck, Deck) {
 }
 
 // Top deals the top card from the deck, removing it from the deck
-func (dp *Deck) Top() Card {
+func (dp *Deck) Top() *Card {
 	d := *dp
+	if d == nil {
+		return nil
+	}
 	c := d[0]
 	if len(d) == 1 {
 		d = nil
@@ -55,7 +60,7 @@ func (dp *Deck) Top() Card {
 		d = d[1:]
 	}
 	*dp = d
-	return c
+	return &c
 }
 
 // TopN deals the top n cards from the deck
@@ -64,7 +69,7 @@ func (dp *Deck) Top() Card {
 func (dp *Deck) TopN(n int) []Card {
 	c := []Card{}
 	for i := 0; i < n && !dp.Empty(); i++ {
-		c = append(c, dp.Top())
+		c = append(c, *dp.Top())
 	}
 	return c
 }

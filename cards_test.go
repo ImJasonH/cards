@@ -22,16 +22,33 @@ func TestShuffleSort(t *testing.T) {
 	if !reflect.DeepEqual(d, NewDeck()) {
 		t.Errorf("expected sorted deck, got %v", d)
 	}
+}
+
+func TestCut(t *testing.T) {
+	d := NewDeck()
 	d1, d2 := d.Cut()
 	if len(d1) != len(d2) || len(d1)+len(d2) != len(d) {
 		t.Errorf("unexpected cut, got %v\n%v", d1, d2)
 	}
 	d1.Add(d2.TopN(len(d2))...)
-	if d2 != nil {
-		t.Errorf("expected d2 to be nil")
-	}
 	d1.Sort()
 	if !reflect.DeepEqual(d1, d) {
 		t.Errorf("unexpected result rejoining cut deck,\n got %v\nwant %v", d1, d)
+	}
+}
+
+func TestEmpty(t *testing.T) {
+	d := Deck(nil)
+	if !d.Empty() {
+		t.Errorf("expected empty deck")
+	}
+	if got := d.Top(); got != nil {
+		t.Errorf("expected nil top card from empty deck")
+	}
+
+	d = NewDeck()
+	d.TopN(len(d))
+	if d != nil {
+		t.Errorf("expected nil deck")
 	}
 }
