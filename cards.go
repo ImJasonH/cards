@@ -4,6 +4,7 @@ package cards
 import (
 	"fmt"
 	"math/rand"
+	"sort"
 	"time"
 )
 
@@ -23,7 +24,7 @@ func NewDeck() Deck {
 	nCards := len(Suits) * Ranks
 	d := make([]Card, nCards)
 	for i := 0; i < nCards; i++ {
-		d[i] = Card{i}
+		d[i] = Card(i)
 	}
 	return d
 }
@@ -41,7 +42,7 @@ func (d Deck) Shuffle() {
 func (d Deck) Cut() (Deck, Deck) {
 	// TODO: Support cutting into >2 decks
 	h := len(d) / 2
-	return d[:h], d[h:]
+	return d[h:], d[:h]
 }
 
 // Top deals the top card from the deck, removing it from the deck
@@ -80,19 +81,31 @@ func (d Deck) Empty() bool {
 	return len(d) == 0
 }
 
-// Card represents a Card in a Deck
-type Card struct {
-	int
+// Sort sorts the deck into the same order it was in when it was created
+func (dp *Deck) Sort() {
+	var is []int
+	for _, c := range *dp {
+		is = append(is, int(c))
+	}
+	sort.Ints(is)
+	var cs []Card
+	for _, i := range is {
+		cs = append(cs, Card(i))
+	}
+	*dp = Deck(cs)
 }
+
+// Card represents a Card in a Deck
+type Card int
 
 // Suit returns the suit of the card
 func (c Card) Suit() Suit {
-	return Suit{c.int / Ranks}
+	return Suit(int(c) / Ranks)
 }
 
 // Rank returns the value of the card, for comparison with the rank of other cards.
 func (c Card) Rank() int {
-	return c.int % Ranks
+	return int(c) % Ranks
 }
 
 var faces = []string{"Jack", "Queen", "King", "Ace"}
@@ -117,11 +130,9 @@ func (c Card) String() string {
 }
 
 // Suit represents the Suit of the card, one of Suits
-type Suit struct {
-	int
-}
+type Suit int
 
 // String returns the string representation of the card, e.g., "Hearts"
 func (s Suit) String() string {
-	return Suits[s.int]
+	return Suits[s]
 }
