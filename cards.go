@@ -126,9 +126,9 @@ func (c Card) Rank() int {
 
 var faces = []string{"J", "Q", "K", "A"}
 
-// String returns a string representation of the card, e.g., "4 of Hearts", "Ace of Spades"
+// String returns a string representation of the card, e.g., "4♡", "A♠"
 //
-// With the default value of Ranks, the rank of the card will be returned starting at 2 until 10, then Jack, Queen, King, Ace.
+// With the default value of Ranks, the rank of the card will be returned starting at 2 until 10, then J, Q, K, A.
 //
 // If Ranks has been modified from its default, the zero-indexed rank will be returned instead.
 func (c Card) String() string {
