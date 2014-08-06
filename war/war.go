@@ -10,11 +10,7 @@ import (
 	"github.com/ImJasonH/cards"
 )
 
-var (
-	games = flag.Int64("n", 100, "Number of games to play")
-	suits = flag.Int("suits", 4, "Number of suits to use")
-	ranks = flag.Int("ranks", 13, "Number of ranks to use")
-)
+var games = flag.Int64("n", 100, "Number of games to play")
 
 func main() {
 	flag.Parse()
@@ -50,8 +46,8 @@ func War() Result {
 	wars := 0
 	var pile Pile
 	for !p1.Empty() && !p2.Empty() {
-		if len(p1)+len(p2)+len(pile.Deck) != *suits**ranks {
-			panic("whoops")
+		if len(p1)+len(p2)+len(pile.Deck) != 52 {
+			panic("lost cards")
 		}
 		c1, c2 := *p1.Top(), *p2.Top()
 		pile.Add(c1, c2)
