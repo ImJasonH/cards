@@ -1,6 +1,4 @@
 // Package cards provides methods for common operations on a deck of cards
-//
-// See https://godoc.org/gist.github.com/9d9bd6b64f06a0066fb2.git
 package cards
 
 import (

@@ -1,4 +1,1 @@
-cards
-=====
-
-Simple Go library for abstracting playing cards
+https://godoc.org/github.com/ImJasonH/cards
